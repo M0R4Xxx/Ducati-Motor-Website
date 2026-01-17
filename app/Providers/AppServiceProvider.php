@@ -9,9 +9,11 @@ use Illuminate\Support\Facades\URL;
 class AppServiceProvider extends ServiceProvider
 {
     public function register()
-    {
-        //
+{
+    if (env('APP_ENV') === 'production') {
+        $this->app->useStoragePath('/tmp/storage');
     }
+}
 
     public function boot()
     {
