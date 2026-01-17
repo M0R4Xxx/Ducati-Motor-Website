@@ -1,25 +1,17 @@
 <?php
 
-// 1. Definisikan folder temporary agar Laravel bisa menulis cache/logs
+// Mengarahkan folder storage ke /tmp agar bisa ditulis di Vercel
 $storagePath = '/tmp/storage';
-
-// 2. Buat folder-folder yang diperlukan jika belum ada
-$folders = [
-    $storagePath . '/framework/views',
-    $storagePath . '/framework/cache',
-    $storagePath . '/framework/sessions',
-    $storagePath . '/logs',
-];
-
-foreach ($folders as $folder) {
-    if (!is_dir($folder)) {
-        mkdir($folder, 0755, true);
+foreach (['/framework/views', '/framework/cache', '/framework/sessions', '/logs'] as $path) {
+    if (!is_dir($storagePath . $path)) {
+        mkdir($storagePath . $path, 0755, true);
     }
 }
 
-// 3. Beritahu Laravel untuk menggunakan folder /tmp tersebut
+// Tambahan: Pastikan Laravel tidak mencari cache konfigurasi yang rusak
+putenv("APP_CONFIG_CACHE=/tmp/config.php");
+putenv("APP_SERVICES_CACHE=/tmp/services.php");
+putenv("APP_PACKAGES_CACHE=/tmp/packages.php");
 putenv("VIEW_COMPILED_PATH=$storagePath/framework/views");
-putenv("LOG_CHANNEL=stderr");
 
-// 4. Jalankan aplikasi Laravel dari folder public
 require __DIR__ . '/../public/index.php';
