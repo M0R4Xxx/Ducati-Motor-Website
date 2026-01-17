@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "framework": null,
+  "functions": {
+    "api/*.php": {
+      "runtime": "vercel-php@0.7.5"
+    }
+  },
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/api/index.php"
+    }
+  ],
+  "env": {
+    "APP_ENV": "production",
+    "APP_DEBUG": "false",
+    "APP_URL": "https://ducati-motor-website.vercel.app",
+    "APP_KEY": "base64:IfgEEne6eEu0ATwRdxqKID4FGZXLKWiHpygbD1D8un0="
+  }
+}
